@@ -1,0 +1,102 @@
+---
+title: Getting Started
+description: A quick start guide to setting up and using KiLM.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+This guide will walk you through the initial setup and basic usage of KiLM.
+
+## Understanding User Roles (Creator vs. Consumer)
+
+KiLM is designed for teams or individuals managing KiCad libraries. We can think of two main roles:
+
+-   **Creator:** This person is responsible for setting up the central library structure, adding symbol/footprint libraries, configuring 3D models, defining custom metadata, and potentially creating project templates. They use commands like `kilm init`, `kilm add-3d`, `kilm template make`, and manage the library's Git repository.
+-   **Consumer:** This person primarily uses the libraries set up by the Creator. Their main goal is to ensure their KiCad installation is correctly configured to use the shared libraries. They typically use commands like `kilm setup` and `kilm update`, and benefit from features like automatic environment variable configuration and pinned libraries managed by the Creator.
+
+While one person might perform both roles, understanding this distinction can help clarify which commands and guides are most relevant to your current task.
+
+## Initial Setup (Typically for Creators)
+
+<Steps>
+
+1.  **Install KiLM:**
+    If you haven't already, install KiLM following the [Installation Guide](/guides/installation/).
+
+2.  **Initialize Your Main Library:**
+    The first step is usually to tell KiLM about your main KiCad library directory. This directory typically contains your custom symbols and footprints.
+
+    Navigate to your main library directory in your terminal and run:
+
+    ```bash
+    kilm init
+    ```
+
+    This command does two things:
+
+    1.  Creates a `kilm.yaml` file inside the current directory to mark it as a KiLM-managed library.
+    2.  Registers this library in the main KiLM [configuration file](/guides/configuration/) (`~/.config/kicad-lib-manager/config.yaml` or equivalent).
+
+    You can customize the initialization:
+
+    ```bash
+    # Initialize with a specific name (used for identification within KiLM)
+    kilm init --name my-project-lib
+
+    # Add a description
+    kilm init --description "Library for My Cool Project"
+
+    # Specify a KiCad environment variable to associate with this library's path
+    kilm init --env-var MY_PROJECT_LIB_PATH
+    ```
+
+    If you don't specify an environment variable, KiLM will use `KICAD_USER_LIB` by default.
+
+3.  **Add a 3D Models Library (Optional):**
+    If you have a separate directory for your custom 3D models (`.step`, `.wrl`, etc.), you can register it with KiLM.
+
+    ```bash
+    # Add the directory /path/to/my/3d-models as a 3D library
+    kilm add-3d --directory /path/to/my/3d-models --name my-3d-assets --env-var MY_3D_MODELS
+    ```
+
+    -   `--directory`: Specifies the path to the 3D models.
+    -   `--name`: Gives this 3D library a unique name within KiLM.
+    -   `--env-var`: Defines the KiCad environment variable that will point to this directory. Using environment variables (like `MY_3D_MODELS`) is highly recommended for 3D paths in KiCad.
+
+    You can add multiple 3D model directories if needed.
+
+4.  **Configure KiCad:**
+    Once you have initialized your libraries, you need to tell KiLM to update KiCad's configuration files.
+
+    Run the following command:
+
+    ```bash
+    kilm setup
+    ```
+
+    This command will:
+
+    1.  Read the KiLM configuration (`config.yaml`).
+    2.  Find KiCad's configuration files (`sym-lib-table`, `fp-lib-table`, `kicad_common.json`).
+    3.  Create backups of the current KiCad configuration files.
+    4.  Add the registered symbol and footprint libraries to the respective KiCad library tables.
+    5.  Set any specified environment variables (like `MY_PROJECT_LIB_PATH` or `MY_3D_MODELS`) in `kicad_common.json`.
+
+    **Important:** You need to **restart KiCad** for these changes to take effect.
+
+    **Dry Run:** Before applying changes, you can see what KiLM *would* do:
+
+    ```bash
+    kilm setup --dry-run
+    ```
+
+    This will print the changes to the terminal without actually modifying any KiCad files.
+
+    **Setting Up Libraries:** Running `kilm setup` without flags configures the *current* symbol/footprint library and the *current* 3D model library registered with KiLM. If you have multiple libraries defined in `config.yaml` and want to ensure *all* of them are added to KiCad, use the `--all-libraries` flag:
+
+    ```bash
+    kilm setup --all-libraries
+    ```
+
+</Steps>

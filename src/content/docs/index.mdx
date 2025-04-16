@@ -1,36 +1,67 @@
 ---
-title: Welcome to Starlight
-description: Get started building your docs site with Starlight.
+title: KiCad Library Manager (KiLM)
+description: A command-line tool for managing KiCad libraries across projects and workstations.
 template: splash
 hero:
-  tagline: Congrats on setting up a new Starlight project!
+  title: KiCad Library Manager
+  tagline: Streamline your KiCad library management across projects and workstations.
   image:
-    file: ../../assets/houston.webp
+    file: ../../assets/KiCad-Logo.webp
   actions:
-    - text: Example Guide
-      link: /guides/example/
+    - text: Get Started
+      link: /guides/getting-started/
       icon: right-arrow
-    - text: Read the Starlight docs
-      link: https://starlight.astro.build
+    - text: View on GitHub
+      link: https://github.com/barisgit/kilm
       icon: external
       variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Next steps
+**KiCad Library Manager (KiLM)** is a command-line tool designed to simplify the way you handle KiCad symbol, footprint, and 3D model libraries. It helps maintain consistency across different projects and workstations by providing a centralized way to manage library configurations and environment variables within KiCad.
+
+[![PyPI version](https://img.shields.io/pypi/v/kilm.svg)](https://pypi.org/project/kilm/)
+[![Python versions](https://img.shields.io/pypi/pyversions/kilm.svg)](https://pypi.org/project/kilm/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+
+## Key Features
 
 <CardGrid stagger>
-	<Card title="Update content" icon="pencil">
-		Edit `src/content/docs/index.mdx` to see this page change.
+	<Card title="Cross-Platform Detection" icon="laptop">
+		Automatically finds KiCad configurations on Windows, macOS, and Linux.
 	</Card>
-	<Card title="Add new content" icon="add-document">
-		Add Markdown or MDX files to `src/content/docs` to create new pages.
+	<Card title="Centralized Management" icon="setting">
+		Add symbol, footprint, and 3D model libraries to KiCad from a central setup.
 	</Card>
-	<Card title="Configure your site" icon="setting">
-		Edit your `sidebar` and other config in `astro.config.mjs`.
+  <Card title="Environment Variables" icon="environment">
+		Set KiCad environment variables directly through the tool.
 	</Card>
-	<Card title="Read the docs" icon="open-book">
-		Learn more in [the Starlight Docs](https://starlight.astro.build/).
+	<Card title="Pinned Libraries" icon="pin">
+		Manage your favorite libraries easily within KiCad.
 	</Card>
+  <Card title="Template Management" icon="folder">
+		Create and use project templates to standardize designs.
+	</Card>
+  <Card title="Safe Updates" icon="cloud-download">
+		Creates timestamped backups before modifying KiCad configurations.
+	</Card>
+</CardGrid>
+
+## Next Steps
+
+<CardGrid>
+  <Card title="Installation" icon="rocket">
+    [Learn how to install KiLM](/guides/installation/) using pip, pipx, or from source.
+  </Card>
+  <Card title="Getting Started" icon="pencil">
+    Follow the [Getting Started guide](/guides/getting-started/) to initialize your first library.
+  </Card>
+  <Card title="Usage" icon="open-book">
+    Explore the detailed [command reference](/reference/cli/) for all features.
+  </Card>
+   <Card title="Configuration" icon="setting">
+    Understand how KiLM stores its [configuration](/guides/configuration/).
+  </Card>
 </CardGrid>
