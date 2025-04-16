@@ -15,6 +15,10 @@ export default defineConfig({
         // Path to your custom CSS file (relative to src)
         "./src/styles/custom.css",
       ],
+      components: {
+        // Override the default Footer component with our custom one
+        Footer: "./src/components/Footer.astro",
+      },
       social: [
         {
           icon: "github",
