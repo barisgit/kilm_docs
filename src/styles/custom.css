@@ -172,25 +172,37 @@
 .animated-badge {
   display: inline-flex;
   align-items: center;
-  background: linear-gradient(
-    90deg,
-    rgba(79, 57, 250, 0.8),
-    rgba(218, 98, 196, 0.8)
-  );
-  border-radius: 999px;
+  background: rgba(30, 30, 40, 0.8);
+  border-radius: 6px;
   padding: 0.45rem 0.85rem;
   font-size: 0.8rem;
-  font-weight: 600;
-  color: white;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
   margin-right: 0.7rem;
   margin-bottom: 0.7rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .animated-badge:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  color: white;
+  text-decoration: none;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Badge variations */
+.animated-badge #pypi-version,
+.animated-badge #pypi-downloads {
+  color: #60efff;
+  font-weight: 600;
+  display: inline-block;
+  margin-right: 0.2rem;
+  position: relative;
 }
 
 /* Animation keyframes */

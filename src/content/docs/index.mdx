@@ -19,6 +19,9 @@ hero:
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
+import BadgeData from '../../components/BadgeData.astro';
+
+<BadgeData />
 
 <div class="gradient-card blue-purple-gradient">
 
@@ -28,9 +31,11 @@ import { Card, CardGrid } from '@astrojs/starlight/components';
 It helps maintain consistency in your designs with a standardized approach to library management.
 
 <div style="margin-top: 1rem;">
-  <span class="animated-badge">PyPI</span>
-  <span class="animated-badge">Python 3.6+</span>
-  <span class="animated-badge">MIT License</span>
+  <a href="https://pypi.org/project/kilm/" class="animated-badge">v<span id="pypi-version">Latest</span></a>
+  <a href="https://pypi.org/project/kilm/" class="animated-badge">Python <span id="python-versions">3.6+</span></a>
+  <a href="https://pepy.tech/projects/kilm" class="animated-badge"><span id="pypi-downloads">2K+</span> Downloads</a>
+  <a href="https://opensource.org/licenses/MIT" class="animated-badge">MIT License</a>
+  <a href="https://kilm.aristovnik.me" class="animated-badge">Documentation</a>
 </div>
 
 </div>
