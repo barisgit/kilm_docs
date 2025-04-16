@@ -11,57 +11,104 @@ hero:
     - text: Get Started
       link: /guides/getting-started/
       icon: right-arrow
+      variant: primary
     - text: View on GitHub
       link: https://github.com/barisgit/kilm
-      icon: external
+      icon: github
       variant: minimal
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-**KiCad Library Manager (KiLM)** is a command-line tool designed to simplify the way you handle KiCad symbol, footprint, and 3D model libraries. It helps maintain consistency across different projects and workstations by providing a centralized way to manage library configurations and environment variables within KiCad.
+<div class="gradient-card blue-purple-gradient">
 
-[![PyPI version](https://img.shields.io/pypi/v/kilm.svg)](https://pypi.org/project/kilm/)
-[![Python versions](https://img.shields.io/pypi/pyversions/kilm.svg)](https://pypi.org/project/kilm/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+## What can you do with KiLM?
 
+**KiLM** centralizes how you handle symbol, footprint, and 3D model libraries across projects and workstations. 
+It helps maintain consistency in your designs with a standardized approach to library management.
 
-## Key Features
+<div style="margin-top: 1rem;">
+  <span class="animated-badge">PyPI</span>
+  <span class="animated-badge">Python 3.6+</span>
+  <span class="animated-badge">MIT License</span>
+</div>
 
-<CardGrid stagger>
-	<Card title="Cross-Platform Detection" icon="laptop">
-		Automatically finds KiCad configurations on Windows, macOS, and Linux.
-	</Card>
-	<Card title="Centralized Management" icon="setting">
-		Add symbol, footprint, and 3D model libraries to KiCad from a central setup.
-	</Card>
-  <Card title="Environment Variables" icon="environment">
-		Set KiCad environment variables directly through the tool.
-	</Card>
-	<Card title="Pinned Libraries" icon="pin">
-		Manage your favorite libraries easily within KiCad.
-	</Card>
-  <Card title="Template Management" icon="folder">
-		Create and use project templates to standardize designs.
-	</Card>
-  <Card title="Safe Updates" icon="cloud-download">
-		Creates timestamped backups before modifying KiCad configurations.
-	</Card>
-</CardGrid>
+</div>
 
-## Next Steps
+<div class="gradient-card green-blue-gradient">
+
+## Take a guided tour
+
+Follow the [Getting Started tutorial](/guides/getting-started/) to learn the basics and set up your first KiLM configuration.
+
+</div>
+
+<div class="gradient-card orange-red-gradient">
+
+## Start a new setup
+
+<div class="terminal-window">
+  <div class="terminal-header">
+    <span class="terminal-buttons">
+      <span class="terminal-button red"></span>
+      <span class="terminal-button yellow"></span>
+      <span class="terminal-button green"></span>
+    </span>
+  </div>
+  <div class="terminal-content">
+    <div class="command-line">pip install kilm</div>
+    <div class="output-line">Successfully installed kilm-1.0.0</div>
+    <div class="command-line">kilm init</div>
+    <div class="output-line">Initializing new KiLM configuration...</div>
+  </div>
+</div>
+
+Our [installation guide](/guides/installation/) has step-by-step instructions for installing KiLM using pip, pipx, or from source, setting up a new project from an existing configuration, and more.
+
+</div>
+
+## Learn
+
+<div class="feature-grid">
+  <div class="feature-card">
+    <h3>Key Features</h3>
+    <p>Learn about KiLM's core capabilities and how they can improve your workflow.</p>
+    <a href="/guides/getting-started/#features">Explore Features</a>
+  </div>
+  <div class="feature-card">
+    <h3>Project Architecture</h3>
+    <p>Understand how KiLM organizes and manages your libraries.</p>
+    <a href="/community/development/">View Architecture</a>
+  </div>
+  <div class="feature-card">
+    <h3>Command Reference</h3>
+    <p>Explore the complete list of commands and their options.</p>
+    <a href="/reference/cli/">View Commands</a>
+  </div>
+  <div class="feature-card">
+    <h3>Configuration Options</h3>
+    <p>Learn how to customize KiLM to fit your specific needs.</p>
+    <a href="/guides/configuration/">View Config Options</a>
+  </div>
+</div>
+
+<div class="gradient-card purple-pink-gradient">
+
+## Extend
 
 <CardGrid>
-  <Card title="Installation" icon="rocket">
-    [Learn how to install KiLM](/guides/installation/) using pip, pipx, or from source.
+  <Card title="Add External Libraries" link="/reference/cli/add-3d/" icon="add-document">
+    Integrate third-party symbol, footprint, and 3D model libraries.
   </Card>
-  <Card title="Getting Started" icon="pencil">
-    Follow the [Getting Started guide](/guides/getting-started/) to initialize your first library.
+  <Card title="Create Project Templates" link="/reference/cli/template/" icon="document">
+    Standardize designs with reusable project templates.
   </Card>
-  <Card title="Usage" icon="open-book">
-    Explore the detailed [command reference](/reference/cli/) for all features.
+  <Card title="Set Environment Variables" link="/reference/cli/config/" icon="seti:config">
+    Configure KiCad environment variables directly through KiLM.
   </Card>
-   <Card title="Configuration" icon="setting">
-    Understand how KiLM stores its [configuration](/guides/configuration/).
+  <Card title="Manage Pinned Libraries" link="/reference/cli/pin/" icon="pin">
+    Keep your favorite libraries readily accessible within KiCad.
   </Card>
 </CardGrid>
+
+</div>

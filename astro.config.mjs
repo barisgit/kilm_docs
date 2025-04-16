@@ -1,12 +1,20 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, passthroughImageService } from "astro/config";
 import starlight from "@astrojs/starlight";
 
 // https://astro.build/config
 export default defineConfig({
+  image: {
+    service: passthroughImageService(),
+  },
+  site: "https://kilm.aristovnik.me",
   integrations: [
     starlight({
       title: "KiLM",
+      customCss: [
+        // Path to your custom CSS file (relative to src)
+        "./src/styles/custom.css",
+      ],
       social: [
         {
           icon: "github",

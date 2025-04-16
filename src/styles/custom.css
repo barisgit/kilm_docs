@@ -1,0 +1,390 @@
+/* Custom KiLM Documentation Styles */
+
+/* Gradient Background Cards */
+.gradient-card {
+  border-radius: 12px;
+  padding: 2rem;
+  margin: 1.5rem 0;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(20, 20, 28, 0.3);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.gradient-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0.3;
+  transform: translateZ(0);
+  background-size: 200% 200%;
+  animation: gradientAnimation 15s ease infinite;
+}
+
+/* Subtle gradient variations */
+.blue-purple-gradient::before {
+  background: linear-gradient(
+    135deg,
+    rgba(79, 57, 250, 0.6),
+    rgba(218, 98, 196, 0.6)
+  );
+}
+
+.green-blue-gradient::before {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 135, 0.5),
+    rgba(96, 239, 255, 0.5)
+  );
+}
+
+.orange-red-gradient::before {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 113, 112, 0.5),
+    rgba(255, 229, 127, 0.5)
+  );
+}
+
+.purple-pink-gradient::before {
+  background: linear-gradient(
+    135deg,
+    rgba(121, 40, 202, 0.5),
+    rgba(255, 0, 128, 0.5)
+  );
+}
+
+/* Subtle card hover effect */
+.gradient-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.gradient-card:hover::before {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+/* Code block styling */
+.custom-code-block {
+  background: linear-gradient(90deg, #151b26, #0e1320);
+  border-radius: 8px;
+  padding: 1.2rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-left: 3px solid rgba(96, 239, 255, 0.7);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Feature grid layout */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, auto);
+  gap: 1.5rem;
+  margin: 2.5rem 0;
+  width: 100%;
+}
+
+.feature-card {
+  border-radius: 10px;
+  padding: 1.5rem;
+  background-color: rgba(30, 30, 40, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 250px;
+  height: 100%;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.feature-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, #4f39fa, #da62c4);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.feature-card:hover::after {
+  opacity: 1;
+}
+
+.feature-card h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.feature-card p {
+  margin-bottom: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.feature-card a {
+  display: inline-flex;
+  align-items: center;
+  color: #60efff;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  margin-top: auto;
+}
+
+.feature-card a:hover {
+  color: #4f39fa;
+}
+
+.feature-card a::after {
+  content: "→";
+  margin-left: 0.5rem;
+  transition: transform 0.2s ease;
+}
+
+.feature-card a:hover::after {
+  transform: translateX(3px);
+}
+
+/* Animated badge */
+.animated-badge {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(
+    90deg,
+    rgba(79, 57, 250, 0.8),
+    rgba(218, 98, 196, 0.8)
+  );
+  border-radius: 999px;
+  padding: 0.45rem 0.85rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: white;
+  margin-right: 0.7rem;
+  margin-bottom: 0.7rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.animated-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Animation keyframes */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Terminal styling - enhanced */
+.terminal-window {
+  background-color: #1a1b26;
+  border-radius: 10px;
+  padding: 0;
+  margin: 1.5rem 0;
+  font-family: "SF Mono", "Monaco", "Menlo", monospace;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background-color: #16161e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  position: relative;
+}
+
+.terminal-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.terminal-title {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  margin-left: 0.8rem;
+  flex: 1;
+  text-align: center;
+  font-weight: 500;
+}
+
+.terminal-button {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 8px;
+  display: inline-block;
+  position: relative;
+  top: 0;
+}
+
+.terminal-button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.terminal-button.red {
+  background-color: #ff5f56;
+}
+.terminal-button.red::before {
+  content: "×";
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.terminal-button.yellow {
+  background-color: #ffbd2e;
+}
+.terminal-button.yellow::before {
+  content: "−";
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.terminal-button.green {
+  background-color: #27c93f;
+}
+.terminal-button.green::before {
+  content: "+";
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.terminal-window:hover .terminal-button::before {
+  opacity: 1;
+}
+
+.terminal-content {
+  color: #f1f1f1;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+.command-line {
+  margin: 0.5rem 0;
+  position: relative;
+  padding-left: 1.2rem;
+  color: #e4e4e4;
+}
+
+.command-line::before {
+  content: "$";
+  position: absolute;
+  left: 0;
+  color: #63f2f1;
+  font-weight: bold;
+}
+
+.output-line {
+  color: #a9b1d6;
+  margin: 0.5rem 0 1rem 0;
+  opacity: 0.9;
+}
+
+/* Typing animation for terminal */
+.typing-animation {
+  width: 0;
+  overflow: hidden;
+  border-right: 2px solid #63f2f1;
+  white-space: nowrap;
+  animation: typing 3s steps(40, end) forwards,
+    blink-caret 0.75s step-end infinite;
+  display: inline-block;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #63f2f1;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gradient-card {
+    padding: 1.5rem;
+  }
+
+  .terminal-title {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1201px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  .gradient-card {
+    background-color: rgba(20, 20, 28, 0.4);
+  }
+
+  .feature-card {
+    background-color: rgba(30, 30, 40, 0.4);
+  }
+}

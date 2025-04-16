@@ -2,8 +2,11 @@
 title: Configuration
 description: Understanding KiLM configuration files.
 ---
+import { Aside } from '@astrojs/starlight/components';
 
-> **Note:** Both **Creators** and **Consumers** may need to understand the configuration, but **Creators** are more likely to directly manage the library entries within `config.yaml`.
+<Aside type="note">
+**Note:** Both **Creators** and **Consumers** may need to understand the configuration, but **Creators** are more likely to directly manage the library entries within `config.yaml`.
+</Aside>
 
 KiLM stores its main configuration file, `config.yaml`, in a standard user configuration directory:
 
@@ -46,4 +49,6 @@ max_backups: 5
 
 KiLM interacts directly with KiCad's own configuration files to add libraries, set environment variables, and manage pinned libraries. KiLM automatically detects the location of these files (usually within KiCad's user settings directory).
 
-**Important:** KiLM creates timestamped backups of KiCad's configuration files (e.g., `fp-lib-table`, `sym-lib-table`, `kicad_common.json`) in a `kilm_backups` subdirectory within KiCad's configuration folder *before* making any changes. The number of backups retained is controlled by the `max_backups` setting in `config.yaml`. This allows you to easily revert if something goes wrong. 
+<Aside type="caution">
+**Important:** KiLM creates timestamped backups of KiCad's configuration files (e.g., `fp-lib-table.backup.YYYYMMDD_HHMMSS`, `sym-lib-table.backup.YYYYMMDD_HHMMSS`, `kicad_common.json.backup.YYYYMMDD_HHMMSS`) in the *same* directory as the original files *before* making any changes. The number of backups retained is controlled by the `max_backups` setting in `config.yaml`. This allows you to easily revert if something goes wrong.
+</Aside> 
