@@ -194,3 +194,70 @@ your-kilm-library/
   - Files ending in `.jinja2` will have their content processed by Jinja.
   - Filenames containing `{{ ... }}` will be renamed based on variable values during project creation.
   - The special variable `{{ project_filename }}` is automatically derived from the project name provided to `kilm template create` and should be used for the main KiCad project files (`.kicad_pro`, `.kicad_sch`, `.kicad_pcb`). 
+
+### Example: `metadata.yaml`
+
+This file defines the template's properties and the variables users will be prompted for.
+
+```yaml
+description: Default 4 layer KiCad project template
+name: default-4layer
+use_case: "Standard 4-layer PCB projects"
+variables:
+  project_name:
+    description: Main KiCad project name (with spaces, e.g., Power Supply)
+  subproject_name:
+    description: Subproject/Module name (with spaces, e.g., Controller Board)
+  directory_name_prefix:
+    default: Hardware
+    description: Top-level directory name (e.g., Hardware or Hardware_ProjectX)
+  directory_name:
+    default: "{{ directory_name_prefix }}_{{ project_name|replace(' ', '') }}_{{ subproject_name|replace(' ', '') }}"
+    description: Full directory name (e.g., Hardware_PowerSupply_ControllerBoard)
+  author:
+    default: YourCompanyName
+    description: Author/Company name (used in documentation and KiCad files)
+  author_position:
+    description: Author position (e.g., Hardware Engineer)
+  version:
+    default: V0.1
+    description: Initial version number (e.g., V0.1)
+version: 1.0.0 # Template version, distinct from project version variable
+```
+
+### Example: Using Variables in a Template File (`README.md.jinja2`)
+
+Template files within the `template/` directory can use Jinja2 syntax (`{{ variable_name }}`) to insert values provided by the user during `kilm template create`.
+
+```markdown
+# {{ project_name }} {{ subproject_name }}
+
+## Overview
+
+This repository contains the PCB design files for the {{ project_name }} {{ subproject_name }} project.
+
+Created by: {{ author }} ({{ author_position }})
+Version: {{ version }}
+
+## Project Structure
+
+```text
+{{ directory_name }}/  # Root directory named using variables
+├── docs/
+├── libraries/
+├── production/
+├── {{ project_name|replace(' ', '') }}_{{ subproject_name|replace(' ', '') }}.kicad_pro
+├── {{ project_name|replace(' ', '') }}_{{ subproject_name|replace(' ', '') }}.kicad_sch
+├── {{ project_name|replace(' ', '') }}_{{ subproject_name|replace(' ', '') }}.kicad_pcb
+├── .gitignore
+└── README.md
+```
+
+## Libraries and Footprints (KiLM)
+
+This project template relies on **KiLM** for managing common, shared KiCad libraries...
+
+[... rest of README content ...]
+```
+
+When a user runs `kilm template create MyProject Controller --template default-4layer` and provides values for `author`, `author_position`, and `version`, the resulting `README.md` in their new project directory will have the `{{ ... }}` placeholders replaced with the actual values. 
