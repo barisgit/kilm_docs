@@ -99,9 +99,12 @@ kilm template create <project_name_or_path> [output_path] [OPTIONS]
 
 1.  **Finds Template:** Locates the specified (or selected) template within the configured KiLM libraries.
 2.  **Reads Metadata:** Loads `metadata.yaml` to get variables and configuration.
-3.  **Determines Variables:** Uses default variables, potentially prompts interactively, and overrides with `--set-var` values.
+3.  **Determines Variables:**
+    - Combines default variables from `metadata.yaml` with any values provided via `--set-var`.
+    - **Interactively prompts** for any remaining variables sequentially.
+    - **Crucially:** When prompting for a variable, its default value is calculated *just-in-time* using the values of variables already entered in the current session. This allows defaults to depend on previous inputs (e.g., the default `directory_name` can be based on the entered `project_name`).
 4.  **Copies and Renders:** Copies files from the template's `template/` directory to the output path.
-5.  **Processes Jinja:** Renders filenames and file content using Jinja2, substituting variables. The special variable `project_filename` is automatically set based on the project name.
+5.  **Processes Jinja:** Renders filenames and file content using Jinja2, substituting the final collected variables.
 6.  **(Optional) Runs Hooks:** Executes the `hooks/post_create.py` script if it exists and `--skip-hooks` was not used.
 
 #### Examples
