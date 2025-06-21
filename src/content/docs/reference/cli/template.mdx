@@ -207,15 +207,15 @@ KiLM supports a Windows-compatible filename templating syntax using `%{variable}
 - `%{author}.md` → `JohnDoe.md`
 
 **With transformations:**
-- `%{project_name|lower}` → converts to lowercase
-- `%{project_name|upper}` → converts to uppercase  
-- `%{project_name|replace(' ', '-')}` → replaces spaces with dashes
-- `%{project_name|replace(' ', '_')|lower}` → chain transformations
+- `%{project_name.lower}` → converts to lowercase
+- `%{project_name.upper}` → converts to uppercase  
+- `%{project_name.replace(' ', '-')}` → replaces spaces with dashes
+- `%{project_name.replace(' ', '_').lower}` → chain transformations
 
 **Examples:**
-- `%{project_name|lower}.kicad_sch` → `myproject.kicad_sch`
-- `%{project_name|replace(' ', '-')}.kicad_pcb` → `my-project.kicad_pcb`
-- `%{author|upper|replace(' ', '_')}.md` → `JOHN_DOE.md`
+- `%{project_name.lower}.kicad_sch` → `myproject.kicad_sch`
+- `%{project_name.replace(' ', '-')}.kicad_pcb` → `my-project.kicad_pcb`
+- `%{author.upper.replace(' ', '_')}.md` → `JOHN_DOE.md`
 
 :::note[Windows Compatibility]
 The new `%{variable}` syntax is recommended for cross-platform compatibility. The old `{{variable}}` syntax still works but may cause filename issues on Windows systems due to character restrictions.
@@ -226,7 +226,7 @@ The new `%{variable}` syntax is recommended for cross-platform compatibility. Th
 This file defines the template's properties and the variables users will be prompted for.
 
 ```yaml
-description: Default 4 layer KiCad project template
+description: "Standard 4-layer PCB projects"
 name: default-4layer
 use_case: "Standard 4-layer PCB projects"
 variables:
@@ -238,7 +238,7 @@ variables:
     default: Hardware
     description: Top-level directory name (e.g., Hardware or Hardware_ProjectX)
   directory_name:
-    default: "%{directory_name_prefix}_%{project_name|replace(' ', '')}_%{subproject_name|replace(' ', '')}"
+    default: "%{directory_name_prefix}_%{project_name.replace(' ', '')}_%{subproject_name.replace(' ', '')}"
     description: Full directory name (e.g., Hardware_PowerSupply_ControllerBoard)
   author:
     default: YourCompanyName
