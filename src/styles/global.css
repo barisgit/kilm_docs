@@ -14,17 +14,19 @@
   --color-accent-600: #816900;
   --color-accent-900: #3e3100;
   --color-accent-950: #2d2300;
-  /* Generated gray color palettes. */
-  --color-gray-100: #f4f6f9;
-  --color-gray-200: #eaeef4;
-  --color-gray-300: #bdc2ca;
-  --color-gray-400: #838c9a;
-  --color-gray-500: #505965;
-  --color-gray-700: #313944;
-  --color-gray-800: #202732;
-  --color-gray-900: #15181d;
+  /* Generated gray color palettes - darker variants */
+  --color-gray-100: #e8eaed;
+  --color-gray-200: #d4d7dc;
+  --color-gray-300: #9ca3af;
+  --color-gray-400: #6b7280;
+  --color-gray-500: #4b5563;
+  --color-gray-600: #374151;
+  --color-gray-700: #1f2937;
+  --color-gray-800: #111827;
+  --color-gray-900: #0f172a;
+  --color-gray-950: #020617;
 
-  /* Dark mode Starlight theme variables */
+  /* Dark mode Starlight theme variables - using darker grays */
   --sl-color-accent-low: var(--color-accent-950);
   --sl-color-accent: var(--color-accent-600);
   --sl-color-accent-high: var(--color-accent-200);
@@ -35,7 +37,7 @@
   --sl-color-gray-4: var(--color-gray-400);
   --sl-color-gray-5: var(--color-gray-500);
   --sl-color-gray-6: var(--color-gray-600);
-  --sl-color-black: var(--color-gray-900);
+  --sl-color-black: var(--color-gray-950);
 
   /* Light mode Starlight theme variables */
   --sl-color-accent-low-light: var(--color-accent-200);
@@ -50,6 +52,11 @@
   --sl-color-gray-6-light: var(--color-gray-200);
   --sl-color-gray-7-light: var(--color-gray-100);
   --sl-color-black-light: #ffffff;
+
+  /* Custom darker background colors */
+  --custom-bg-primary: #0a0e1a;
+  --custom-bg-secondary: #0f1419;
+  --custom-bg-tertiary: #151b26;
 }
 
 /* Custom animations for gradients */
@@ -72,13 +79,30 @@
 }
 
 body {
-  @apply bg-gray-50 dark:bg-gray-800;
+  @apply bg-gray-100 dark:bg-[var(--custom-bg-primary)];
 }
 
 .header {
-  @apply bg-gray-50 dark:bg-gray-700;
+  @apply bg-gray-100 dark:bg-[var(--custom-bg-secondary)];
 }
 
 .sidebar-content {
-  @apply bg-gray-50 dark:bg-gray-800;
+  @apply bg-gray-100 dark:bg-[var(--custom-bg-tertiary)];
+}
+
+/* Additional dark theme enhancements */
+:root[data-theme="dark"] {
+  --sl-color-bg: var(--custom-bg-primary);
+  --sl-color-bg-nav: var(--custom-bg-secondary);
+  --sl-color-bg-sidebar: var(--custom-bg-tertiary);
+}
+
+/* Content area dark background */
+main {
+  @apply dark:bg-[var(--custom-bg-primary)];
+}
+
+/* Article content dark background */
+article {
+  @apply dark:bg-[var(--custom-bg-primary)];
 }
