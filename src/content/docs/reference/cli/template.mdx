@@ -29,7 +29,7 @@ kilm template make <template_name> [project_path] [OPTIONS]
 
 - `--description TEXT`: A description for the template.
 - `--use-case TEXT`: Describe the intended use case for this template.
-- `--variable TEXT`: Define a variable for the template (key=value pair). Can be used multiple times. These variables can be used within template filenames and file content using Jinja2 syntax (e.g., `{{ author }}`).
+- `--variable TEXT`: Define a variable for the template (key=value pair). Can be used multiple times. These variables can be used within template filenames using `%{variable}` syntax and within file content using Jinja2 `{{variable}}` syntax.
 - `--exclude TEXT`: Glob pattern (like `.gitignore`) to exclude specific files or directories from the template. Can be used multiple times.
 - `--output-directory DIRECTORY`: 
   Specifies the directory where the `templates/<template_name>` structure will be created. Defaults to the `templates` directory within the KiLM library containing the current working directory.
@@ -50,7 +50,7 @@ kilm template make <template_name> [project_path] [OPTIONS]
 2.  **Determines Output:** Finds the target `templates/` directory (either default or via `--output-directory`).
 3.  **Creates Template Structure:** Creates `templates/<template_name>/`.
 4.  **Copies Files:** Copies project files into `templates/<template_name>/template/`, respecting `.gitignore` and `--exclude` patterns.
-5.  **Jinja Conversion:** Renames files and replaces content using Jinja2 syntax based on detected project names and provided/detected variables (e.g., `MyProject.kicad_pro` becomes `{{ project_filename }}.kicad_pro.jinja2`).
+5.  **Filename Templating:** Renames files using Windows-compatible syntax based on detected project names and provided/detected variables (e.g., `MyProject.kicad_pro` becomes `%{project_filename}.kicad_pro.jinja2`).
 6.  **Creates `metadata.yaml`:** Generates a `metadata.yaml` file containing the template name, description, use case, detected/defined variables, and exclusions.
 7.  **(Optional) Creates Hooks:** Can set up pre/post-creation hook scripts (e.g., `hooks/post_create.py`).
 
@@ -104,7 +104,9 @@ kilm template create <project_name_or_path> [output_path] [OPTIONS]
     - **Interactively prompts** for any remaining variables sequentially.
     - **Crucially:** When prompting for a variable, its default value is calculated *just-in-time* using the values of variables already entered in the current session. This allows defaults to depend on previous inputs (e.g., the default `directory_name` can be based on the entered `project_name`).
 4.  **Copies and Renders:** Copies files from the template's `template/` directory to the output path.
-5.  **Processes Jinja:** Renders filenames and file content using Jinja2, substituting the final collected variables.
+5.  **Processes Templates:** 
+    - Renders filenames using Windows-compatible `%{variable}` syntax (with fallback support for legacy `{{variable}}` syntax)
+    - Renders file content using Jinja2 `{{variable}}` syntax for `.jinja2` files
 6.  **(Optional) Runs Hooks:** Executes the `hooks/post_create.py` script if it exists and `--skip-hooks` was not used.
 
 #### Examples
@@ -180,20 +182,44 @@ your-kilm-library/
         ├── hooks/
         │   └── post_create.py  # Optional post-creation script
         └── template/           # Files to be copied and rendered
-            ├── {{ project_filename }}.kicad_pro.jinja2
-            ├── {{ project_filename }}.kicad_sch.jinja2
-            ├── {{ project_filename }}.kicad_pcb.jinja2
+            ├── %{project_filename}.kicad_pro.jinja2
+            ├── %{project_filename}.kicad_sch.jinja2
+            ├── %{project_filename}.kicad_pcb.jinja2
             ├── README.md.jinja2
             └── assets/
-                └── logo-{{ company_name | lower }}.png.jinja2
+                └── logo-%{company_name|lower}.png.jinja2
 ```
 
 - **`metadata.yaml`**: Defines template variables and descriptions.
 - **`hooks/`**: Contains optional Python scripts to run after project creation.
 - **`template/`**: Holds the project files.
-  - Files ending in `.jinja2` will have their content processed by Jinja.
-  - Filenames containing `{{ ... }}` will be renamed based on variable values during project creation.
-  - The special variable `{{ project_filename }}` is automatically derived from the project name provided to `kilm template create` and should be used for the main KiCad project files (`.kicad_pro`, `.kicad_sch`, `.kicad_pcb`). 
+  - Files ending in `.jinja2` will have their content processed by Jinja2.
+  - **Filenames containing `%{...}` will be renamed based on variable values during project creation** (Windows-compatible syntax).
+  - **Legacy support**: Filenames with `{{ ... }}` are still supported but may cause issues on Windows.
+  - The special variable `%{project_filename}` is automatically derived from the project name provided to `kilm template create` and should be used for the main KiCad project files (`.kicad_pro`, `.kicad_sch`, `.kicad_pcb`).
+
+### Filename Templating Syntax
+
+KiLM supports a Windows-compatible filename templating syntax using `%{variable}` instead of `{{variable}}`:
+
+**Basic usage:**
+- `%{project_name}.kicad_pro` → `MyProject.kicad_pro`
+- `%{author}.md` → `JohnDoe.md`
+
+**With transformations:**
+- `%{project_name|lower}` → converts to lowercase
+- `%{project_name|upper}` → converts to uppercase  
+- `%{project_name|replace(' ', '-')}` → replaces spaces with dashes
+- `%{project_name|replace(' ', '_')|lower}` → chain transformations
+
+**Examples:**
+- `%{project_name|lower}.kicad_sch` → `myproject.kicad_sch`
+- `%{project_name|replace(' ', '-')}.kicad_pcb` → `my-project.kicad_pcb`
+- `%{author|upper|replace(' ', '_')}.md` → `JOHN_DOE.md`
+
+:::note[Windows Compatibility]
+The new `%{variable}` syntax is recommended for cross-platform compatibility. The old `{{variable}}` syntax still works but may cause filename issues on Windows systems due to character restrictions.
+:::
 
 ### Example: `metadata.yaml`
 
@@ -212,7 +238,7 @@ variables:
     default: Hardware
     description: Top-level directory name (e.g., Hardware or Hardware_ProjectX)
   directory_name:
-    default: "{{ directory_name_prefix }}_{{ project_name|replace(' ', '') }}_{{ subproject_name|replace(' ', '') }}"
+    default: "%{directory_name_prefix}_%{project_name|replace(' ', '')}_%{subproject_name|replace(' ', '')}"
     description: Full directory name (e.g., Hardware_PowerSupply_ControllerBoard)
   author:
     default: YourCompanyName
@@ -239,25 +265,17 @@ This repository contains the PCB design files for the {{ project_name }} {{ subp
 Created by: {{ author }} ({{ author_position }})
 Version: {{ version }}
 
-## Project Structure
-
-```text
-{{ directory_name }}/  # Root directory named using variables
-├── docs/
-├── libraries/
-├── production/
-├── {{ project_name|replace(' ', '') }}_{{ subproject_name|replace(' ', '') }}.kicad_pro
-├── {{ project_name|replace(' ', '') }}_{{ subproject_name|replace(' ', '') }}.kicad_sch
-├── {{ project_name|replace(' ', '') }}_{{ subproject_name|replace(' ', '') }}.kicad_pcb
-├── .gitignore
-└── README.md
-```
-
 ## Libraries and Footprints (KiLM)
 
 This project template relies on **KiLM** for managing common, shared KiCad libraries...
 
 [... rest of README content ...]
 ```
+
+:::tip[Syntax Differences]
+- **File content** (inside `.jinja2` files): Use Jinja2 syntax `{{ variable_name }}` 
+- **Filenames**: Use Windows-compatible syntax `%{variable_name}` for new templates
+- **Legacy filenames**: Old `{{ variable_name }}` syntax in filenames still works but may cause issues on Windows
+:::
 
 When a user runs `kilm template create MyProject Controller --template default-4layer` and provides values for `author`, `author_position`, and `version`, the resulting `README.md` in their new project directory will have the `{{ ... }}` placeholders replaced with the actual values. 
